@@ -6,7 +6,7 @@ import basemod.helpers.RelicType;
 import basemod.interfaces.EditRelicsSubscriber;
 import basemod.interfaces.EditStringsSubscriber;
 import basemod.interfaces.PostDungeonInitializeSubscriber;
-import cn.candy.relic.Money;
+import cn.candy.relic.aoman;
 import com.badlogic.gdx.Gdx;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -43,7 +43,7 @@ public class LoadMySpireMod implements PostDungeonInitializeSubscriber, EditReli
     public void receivePostDungeonInitialize() {
         logger.info(">>>初始化开始<<<");
         //给人物添加遗物
-        tryGetRelic(new Money());
+        tryGetRelic(new aoman());
         logger.info(">>>初始化完成<<<");
     }
     
@@ -53,8 +53,8 @@ public class LoadMySpireMod implements PostDungeonInitializeSubscriber, EditReli
     @Override
     public void receiveEditRelics() {
         logger.info(">>>尝试在游戏中加载自定义遗物属性开始<<<");
-        logger.info(">>>尝试在游戏中加载【{}】遗物数据<<<", Money.ID);
-        BaseMod.addRelic(new Money(), RelicType.SHARED);
+        logger.info(">>>尝试在游戏中加载【{}】遗物数据<<<", aoman.ID);
+        BaseMod.addRelic(new aoman(), RelicType.SHARED);
         logger.info(">>>尝试在游戏中加载自定义遗物属性完毕<<<");
     }
     
@@ -89,7 +89,7 @@ public class LoadMySpireMod implements PostDungeonInitializeSubscriber, EditReli
         if (!AbstractDungeon.player.hasRelic(customRelic.relicId)) {
             logger.info(">>>人物没有遗物【{}】,尝试给人物添加遗物【{}】<<<", customRelic.relicId, customRelic.relicId);
             int slot = AbstractDungeon.player.getRelicNames().size();
-            customRelic.instantObtain(AbstractDungeon.player, slot, false);
+           // customRelic.instantObtain(AbstractDungeon.player, slot, false);
             logger.info(">>>尝试给人物添加遗物【{}】成功<<<", customRelic.relicId);
         }
     }

@@ -1,8 +1,13 @@
 package cn.candy.relic;
 
 import basemod.abstracts.CustomRelic;
-import cn.candy.config.RelicConfig;
+import cn.candy.helpers.ModHelper;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
+import com.megacrit.cardcrawl.relics.MarkOfTheBloom;
+import com.megacrit.cardcrawl.relics.Pear;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,38 +18,40 @@ import org.apache.logging.log4j.Logger;
  * @date : 2020-08-06 16:27
  **/
 @SuppressWarnings("unused")
-public class Money extends CustomRelic {
+public class dangao extends CustomRelic {
     /**
      * 遗物ID 随便写 但是需要和json文件名称一致
      * 比如我这里最终是 CANDY_MOD_Money 就需要最后json文件内有 CANDY_MOD_Money 的遗物信息
      */
-    public static final String ID = RelicConfig.RELIC_PRE_NAME + "Money";
+    public static final String ID = ModHelper.makePath(dangao.class.getSimpleName());
     /**
      * 日志对象
      */
-    private static final Logger log = LogManager.getLogger(Money.class);
-    
+    private static final Logger log = LogManager.getLogger(dangao.class);
+
     /**
      * 构造函数
      */
-    public Money() {
+    public dangao() {
         //图片使用内置的 使用破碎王冠 的图标
         //使用内置图标就不需要导入了 想自定义可以抄其他的mod或者看教程
-        super(ID, "crown.png", RelicTier.COMMON, LandingSound.CLINK);
+
+        super(ID, new Texture(Gdx.files.internal("images/relics/aoman.png")), RelicTier.BOSS, LandingSound.CLINK);
     }
-    
-    /**
-     * 在战斗开始时触发
-     */
+    int floor;
     @Override
-    public void atBattleStart() {
-        super.atBattleStart();
-        //定义一个金钱变量为100
-        int money = 100;
-        //日志打印增加了100金币
-        log.info(">>>回合开始时获得{}金币。<<<", money);
-        //给人物增加100金币
-        AbstractDungeon.player.gainGold(money);
+    public void obtain()
+    {
+        super.obtain();
+        //拾起时，获得所有除了自己以外的boss遗物
+        AbstractDungeon.player.increaseMaxHp(10, true);
+        floor=AbstractDungeon.floorNum;
+    }
+    public int onPlayerHeal(int healAmount) {
+        this.flash();
+        if(!(floor ==AbstractDungeon.floorNum)) {
+            return 0;
+        }else return healAmount;
     }
     
     /**
