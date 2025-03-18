@@ -1,9 +1,16 @@
 package cn.candy.relic;
 
 import basemod.abstracts.CustomRelic;
+import basemod.cardmods.EtherealMod;
+import basemod.cardmods.ExhaustMod;
+import basemod.helpers.CardModifierManager;
+import cn.candy.cardmodifier.CrazyMod;
 import cn.candy.helpers.ModHelper;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,7 +41,16 @@ public class chenghuacheng extends CustomRelic {
 
         super(ID, new Texture(Gdx.files.internal("images/relics/aoman.png")), RelicTier.BOSS, LandingSound.CLINK);
     }
-
+    public void obtain()
+    {
+        super.obtain();
+        //拾起时，获得所有除了自己以外的boss遗物
+        for (AbstractCard card:AbstractDungeon.player.masterDeck.group){
+            CardModifierManager.addModifier(card,new ExhaustMod());
+            CardModifierManager.addModifier(card,new EtherealMod());
+            CardModifierManager.addModifier(card,new CrazyMod());
+        }
+    }
 
 
 

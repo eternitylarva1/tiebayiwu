@@ -1,19 +1,32 @@
 package cn.candy.hook;
 
+import basemod.AutoAdd;
 import basemod.BaseMod;
 import basemod.abstracts.CustomRelic;
 import basemod.helpers.RelicType;
-import basemod.interfaces.EditRelicsSubscriber;
-import basemod.interfaces.EditStringsSubscriber;
-import basemod.interfaces.PostDungeonInitializeSubscriber;
+import basemod.interfaces.*;
 import cn.candy.relic.aoman;
+import cn.candy.relic.kuangwang;
 import com.badlogic.gdx.Gdx;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
+import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.map.MapRoomNode;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.rooms.MonsterRoom;
+import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
+import com.megacrit.cardcrawl.rooms.RestRoom;
+import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.currMapNode;
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.scene;
 
 /**
  * 加载遗物 用于在游戏中注入你修改的内容
@@ -23,7 +36,7 @@ import org.apache.logging.log4j.Logger;
  **/
 @SpireInitializer
 @SuppressWarnings("unused")
-public class LoadMySpireMod implements PostDungeonInitializeSubscriber, EditRelicsSubscriber, EditStringsSubscriber {
+public class LoadMySpireMod implements PostDungeonUpdateSubscriber,StartActSubscriber,PostDungeonInitializeSubscriber, EditRelicsSubscriber, EditStringsSubscriber {
     /**
      * 日志对象 用来输出日志 指定本类 LoadMyEasyMod 以确认日志的输出对象
      */
@@ -47,7 +60,8 @@ public class LoadMySpireMod implements PostDungeonInitializeSubscriber, EditReli
         tryGetRelic(new aoman());
         logger.info(">>>初始化完成<<<");
     }
-    
+    public static String ModID="ChouxiangRelic";
+
     /**
      * 在游戏模组中加入新遗物
      */
@@ -55,7 +69,17 @@ public class LoadMySpireMod implements PostDungeonInitializeSubscriber, EditReli
     public void receiveEditRelics() {
         logger.info(">>>尝试在游戏中加载自定义遗物属性开始<<<");
         logger.info(">>>尝试在游戏中加载【{}】遗物数据<<<", aoman.ID);
-        BaseMod.addRelic(new aoman(), RelicType.SHARED);
+        new AutoAdd(ModID)
+                .packageFilter(aoman.class)
+                .any(CustomRelic.class, (info, relic) -> {
+                    BaseMod.addRelic(relic,RelicType.SHARED);
+
+                    UnlockTracker.markRelicAsSeen(relic.relicId);
+
+                });
+
+
+
         logger.info(">>>尝试在游戏中加载自定义遗物属性完毕<<<");
     }
     
@@ -67,6 +91,8 @@ public class LoadMySpireMod implements PostDungeonInitializeSubscriber, EditReli
 
         receiveJson("遗物", "MyNewCustomRelicList.json", RelicStrings.class);
         receiveJson("卡牌", "cards.json", CardStrings.class);
+        receiveJson("UI", "uistrings.json", UIStrings.class);
+        receiveJson("power", "powers.json", PowerStrings.class);
     }
     
     /**
@@ -95,5 +121,22 @@ public class LoadMySpireMod implements PostDungeonInitializeSubscriber, EditReli
            // customRelic.instantObtain(AbstractDungeon.player, slot, false);
             logger.info(">>>尝试给人物添加遗物【{}】成功<<<", customRelic.relicId);
         }
+    }
+
+
+
+    public void receivePreDungeonUpdate() {
+
+
+    }
+
+    @Override
+    public void receiveStartAct() {
+
+    }
+
+    @Override
+    public void receivePostDungeonUpdate() {
+
     }
 }
