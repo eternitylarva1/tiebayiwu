@@ -43,7 +43,7 @@ public class gangtiehexin extends CustomRelic {
         //图片使用内置的 使用破碎王冠 的图标
         //使用内置图标就不需要导入了 想自定义可以抄其他的mod或者看教程
 
-        super(ID, new Texture(Gdx.files.internal("images/relics/aoman.png")), RelicTier.BOSS, LandingSound.CLINK);
+        super(ID, new Texture(Gdx.files.internal("images/relics/gangtiehexin.png")), RelicTier.BOSS, LandingSound.CLINK);
     }
 
     @Override
