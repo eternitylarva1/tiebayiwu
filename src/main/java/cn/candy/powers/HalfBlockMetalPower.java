@@ -44,10 +44,7 @@ public class HalfBlockMetalPower extends AbstractPower {
     }
 
     public float modifyBlockLast(float blockAmount) {
-        if (blockAmount > 0) {
-          this.addToBot(new ApplyPowerAction(this.owner, this.owner, new MetallicizePower(this.owner, (int) (blockAmount/2)), (int) (blockAmount/2), true));
-        }
-        return 0.0F;
+        return blockAmount / 2.0F;
     }
 
     static {

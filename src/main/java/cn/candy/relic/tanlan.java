@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.map.MapRoomNode;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import com.megacrit.cardcrawl.rooms.RestRoom;
+import com.megacrit.cardcrawl.vfx.combat.HealEffect;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,7 +45,12 @@ public class tanlan extends CustomRelic  {
         super(ID, new Texture(Gdx.files.internal("images/relics/tanlan.png")), RelicTier.BOSS, LandingSound.CLINK);
     }
 
-
+    public void obtain()
+    {
+        super.obtain();
+        //拾起时，获得所有除了自己以外的boss遗物
+        AbstractDungeon.player.gainGold(9999);
+    }
 
     @Override
     public void onEnterRoom(AbstractRoom room) {

@@ -3,5 +3,11 @@
     "TEXT": [
       "卡牌变为0费"
     ]
+  },
+  "ChouxiangRelic:MetalModifier": {
+    "TEXT": [
+      "格挡",
+      "金属化"
+    ]
   }
 }

@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.MarkOfTheBloom;
 import com.megacrit.cardcrawl.relics.Pear;
+import com.megacrit.cardcrawl.vfx.combat.HealEffect;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,6 +46,7 @@ public class dangao extends CustomRelic {
         super.obtain();
         //拾起时，获得所有除了自己以外的boss遗物
         AbstractDungeon.player.increaseMaxHp(150, true);
+        AbstractDungeon.effectsQueue.add(new HealEffect(AbstractDungeon.player.hb.cX - AbstractDungeon.player.animX, AbstractDungeon.player.hb.cY, 150));
         floor=AbstractDungeon.floorNum;
     }
     public int onPlayerHeal(int healAmount) {

@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.DexterityPower;
 import com.megacrit.cardcrawl.powers.FocusPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
+import com.megacrit.cardcrawl.powers.TimeMazePower;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,17 +44,20 @@ public class chuncui extends CustomRelic {
         //使用内置图标就不需要导入了 想自定义可以抄其他的mod或者看教程
 
         super(ID, new Texture(Gdx.files.internal("images/relics/chuncui.png")), RelicTier.BOSS, LandingSound.CLINK);
+        this.counter=0;
     }
 
     @Override
     public void atBattleStart() {
         super.atBattleStart();
+        this.counter = 0;
         //战斗开始时获得99力量，99敏捷，44集中。每回合最多打出1张牌。
         this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player,new StrengthPower(AbstractDungeon.player,50)));
         this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player,new DexterityPower(AbstractDungeon.player,50)));
     }
+    @Override
     public void onPlayCard(AbstractCard card, AbstractMonster m) {
-        if (this.counter < 15 && card.type != AbstractCard.CardType.CURSE) {
+        if (this.counter < 1 && card.type != AbstractCard.CardType.CURSE) {
             ++this.counter;
             if (this.counter >= 15) {
                 this.flash();
@@ -61,15 +65,19 @@ public class chuncui extends CustomRelic {
         }
 
     }
-
+    @Override
     public boolean canPlay(AbstractCard card) {
-        if (this.counter >= 15 && card.type != AbstractCard.CardType.CURSE) {
+        if (this.counter >= 1 && card.type != AbstractCard.CardType.CURSE) {
             card.cantUseMessage = DESC[2] + 1 + DESC[1];
             return false;
         } else {
             return true;
         }
 
+    }
+
+    public void atTurnStart() {
+        this.counter = 0;
     }
 
     /**
