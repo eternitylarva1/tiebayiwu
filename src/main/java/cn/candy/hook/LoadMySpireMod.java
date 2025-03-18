@@ -10,6 +10,7 @@ import cn.candy.relic.aoman;
 import com.badlogic.gdx.Gdx;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -63,7 +64,9 @@ public class LoadMySpireMod implements PostDungeonInitializeSubscriber, EditReli
      */
     @Override
     public void receiveEditStrings() {
+
         receiveJson("遗物", "MyNewCustomRelicList.json", RelicStrings.class);
+        receiveJson("卡牌", "cards.json", CardStrings.class);
     }
     
     /**

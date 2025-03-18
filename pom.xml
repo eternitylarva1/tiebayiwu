@@ -4,52 +4,89 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.candy</groupId>
-    <artifactId>more-money-spire-mod</artifactId>
-    <version>1.7</version>
-    <!--项目属性配置-->
+    <!-- 改成你需要的名称 -->
+    <groupId>DEFECTNAME</groupId>
+    <!-- 改成你需要的名称 -->
+    <artifactId>DEFECTNAME</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <!-- 改成你需要的名称 -->
+    <name>DEFECTNAME</name>
+    <!-- 改不改由你 -->
+    <description>a sts mod.</description>
+
     <properties>
-        <!--本项目指定编码格式UTF-8，不需要你修改-->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!--本项目指定编码JDK版本未JDK8，不需要你修改-->
         <maven.compiler.source>1.8</maven.compiler.source>
-        <!--本项目指定编码输出JDK版本未JDK8，不需要你修改-->
         <maven.compiler.target>1.8</maven.compiler.target>
+        <SlayTheSpire.version>12-22-2020</SlayTheSpire.version>
+        <ModTheSpire.version>3.23.2</ModTheSpire.version>
+        <!-- *****一定要改 ***** -->
+        <!-- 改成你的steam安装路径位置，指向steamapps文件夹（该目录安装了杀戮尖塔及mod） -->
+        <Steam.path>C:\Program Files (x86)\steam\steamapps</Steam.path>
     </properties>
-    <!--本项目的依赖-->
+
     <dependencies>
-        <!--1.游戏本体desktop-1.0.jar的依赖-->
         <dependency>
             <groupId>com.megacrit.cardcrawl</groupId>
             <artifactId>slaythespire</artifactId>
-            <version>016</version>
-            <!--写system代表是本地依赖-->
+            <version>2020-11-30</version>
             <scope>system</scope>
-            <!--这里的SystemPath可以直接粘贴绝对路径，比如如果游戏目录：F:\game\Slay.the.Spire且内有desktop-1.0.jar文件-->
-            <!--这里可以直接写F:\game\Slay.the.Spire\desktop-1.0.jar ,注意斜杠改反斜杠如下：-->
-            <systemPath>C:/Program Files (x86)/Steam/steamapps/common/SlayTheSpire/desktop-1.0.jar</systemPath>
-            <!--或者直接在项目下新建一个lib目录，将资源文件丢入lib目录内-->
-            <!--<systemPath>${project.basedir}/lib/desktop-1.0.jar</systemPath>-->
+            <systemPath>${Steam.path}/common/SlayTheSpire/desktop-1.0.jar</systemPath>
         </dependency>
-        <!--2.游戏模组ModTheSpire.jar的依赖-->
-        <dependency>
-            <groupId>com.evacipated.cardcrawl</groupId>
-            <artifactId>ModTheSpire</artifactId>
-            <version>2.2.1</version>
-            <!--写system代表是本地依赖-->
-            <scope>system</scope>
-            <!--同上所述-->
-            <systemPath>C:/Program Files (x86)/Steam/steamapps/common/SlayTheSpire/ModTheSpire.jar</systemPath>
-        </dependency>
-        <!--3.游戏模组BaseMod.jar的依赖-->
         <dependency>
             <groupId>basemod</groupId>
             <artifactId>basemod</artifactId>
-            <version>1.6.4</version>
-            <!--写system代表是本地依赖-->
+            <version>5.33.1</version>
             <scope>system</scope>
-            <!--同上所述-->
-            <systemPath>C:/Program Files (x86)/Steam/steamapps/common/SlayTheSpire/BaseMod.jar</systemPath>
+            <systemPath>${Steam.path}/workshop/content/646570/1605833019/BaseMod.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.evacipated.cardcrawl</groupId>
+            <artifactId>ModTheSpire</artifactId>
+            <version>3.23.2</version>
+            <scope>system</scope>
+            <systemPath>${Steam.path}/workshop/content/646570/1605060445/ModTheSpire.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.evacipated.cardcrawl</groupId>
+            <artifactId>StSLib</artifactId>
+            <version>2.11.0</version>
+            <scope>system</scope>
+            <systemPath>${Steam.path}/workshop/content/646570/1609158507/StSLib.jar</systemPath>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <copy file="target/${project.artifactId}.jar" tofile="${Steam.path}/common/SlayTheSpire/mods/${project.artifactId}.jar"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
