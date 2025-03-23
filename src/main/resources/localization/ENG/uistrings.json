@@ -1,23 +1,22 @@
 {
   "ChouxiangRelic:compoundeffect": {
     "TEXT": [
-      "卡牌变为0费"
+      "Cards become 0 cost"
     ]
   },
   "ChouxiangRelic:MetalModifier": {
     "TEXT": [
-      " NL 获得 !B! 点 金属化 ",
-      "格挡",
-      "金属化"
+      " NL Gain !B! Metallization ",
+      "Block",
+      "Metallization"
     ]
   },
   "ChouxiangRelic:ThronsModifier": {
     "TEXT": [
-      "伤害",
-      "荆棘",
-      "造成",
-      "获得"
-
+      "Damage",
+      "Thorns",
+      "Deal",
+      "Gain"
     ]
   }
 }
