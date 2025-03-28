@@ -35,7 +35,6 @@ public class MetalModifier extends AbstractCardModifier {
         this.addToBot(new AbstractGameAction() {
             @Override
             public void update() {
-
                 card.use(AbstractDungeon.player, (AbstractMonster) target);
                 isDone=true;
             }

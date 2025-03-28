@@ -14,6 +14,8 @@ import ChouXiangRelic.patchs.InterruptUseCardFieldPatches;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.red.BodySlam;
+import com.megacrit.cardcrawl.cards.red.TwinStrike;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -30,17 +32,7 @@ public class ThronsModifier extends AbstractCardModifier {
     }
     public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
 
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player,new ThornsPower(AbstractDungeon.player,card.damage)));
-
-
-        if(card.multiDamage!=null) {
-
-            for(int i=0;i<card.multiDamage.length-1;i++){
-                this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player,new ThornsPower(AbstractDungeon.player,card.damage)));
-                card.multiDamage[i]=0;
-            }
-        }
-        card.damage=0;
+        ///this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player,new ThornsPower(AbstractDungeon.player,card.damage)));
         card.use(AbstractDungeon.player,  (target instanceof AbstractMonster) ? (AbstractMonster)target : null);
 
 
