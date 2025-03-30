@@ -23,5 +23,6 @@ ChouXiangRelic\cardmodifier\MetalModifier$1.class
 ChouXiangRelic\utils\Invoker.class
 ChouXiangRelic\relic\kuangwang.class
 ChouXiangRelic\patchs\InterruptUseCardFieldPatches.class
+ChouXiangRelic\patchs\DamagePatch.class
 ChouXiangRelic\relic\chenghuacheng.class
 ChouXiangRelic\cardmodifier\MetalModifier.class
